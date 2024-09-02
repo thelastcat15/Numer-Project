@@ -8,6 +8,7 @@ function Home() {
   return (
     <>
       <Nav />
+      test
       <Table />
     </>
   )
