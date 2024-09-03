@@ -5,8 +5,9 @@ import {
 } from "react-router-dom";
 import { createRoot } from 'react-dom/client'
 
-import Home from './pages/Home'
 import './css/index.css'
+
+import Home from './pages/Home'
 
 const router = createBrowserRouter([
   {
