@@ -3,10 +3,9 @@
 @tailwind utilities;
 
 body {
-  min-height: 100vh !important;
+  min-height: 300vh !important;
   margin: 0;
   padding: 0;
   background-color: #000000;
   color: white;
-  font-family: "Open Sans, sans-serif";
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Dropdown = ({ children, Content }) => {
@@ -42,66 +42,30 @@ const Dropdown = ({ children, Content }) => {
   );
 };
 
-const Topics = {
-  "Root of Equation" : [
-    "Graphical methods",
-    "Bisection search",
-    "False-position methods",
-    "One-point Iteration methods",
-    "Newton-Raphson methods",
-    "Secant methods"
-  ],
-  "Linear algebra equation" : [
-    "Cramer's rule",
-    "Guass elimination",
-    "Guass Jordan elimination",
-    "Matrix Inversion",
-    "LU Decomposition Methods",
-    "Jacobi Iteration Methods",
-    "Conjugate Gradient Methods"
-  ],
-  "Interpolation" : [
-    "Newton divided-differences",
-    "Lagrange interpolation",
-    "Spline interpolation"
-  ],
-  "Extrapolation" : [
-    "Simple Regression",
-    "Multiple Regression"
-  ],
-  "Integration" : [
-    "Trapezoidal Rule",
-    "Composite Trapezoidal Rule",
-    "Simpson Rule",
-    "Composite Simpson Rule"
-  ],
-  "Differentiation" : [
-    "Numerical Differentiation"
-  ]
-}
+function Nav({ topics }) {
 
-function Nav() {
   return (
-    <div className="font-sans font-semibold p-4 flex justify-evenly">
-      {Object.entries(Topics).map(([key, value]) => (
-        <Dropdown key={key} Content={() => {
-          return (
-            <div className="text-center p-3 shadow-xl whitespace-nowrap">
-              {value.map(i => (
-                <a key={i} href="#">
-                  <div>
-                    <p className="m-2 hover:text-[#7a76ff] transition-colors duration-300">{i}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
-          )
-        }}>
-          {key}
+    <div className={`sans font-semibold py-4 flex justify-evenly border-b-2 border-[#282D33]`}>
+      {Object.entries(topics).map(([category, subtopics]) => (
+        <Dropdown
+          key={category}
+          Content={() => {
+            return (
+              <div className="text-center p-3 shadow-xl whitespace-nowrap">
+                {Object.entries(subtopics).map(([title, { path, element }]) => (
+                  <a key={path} href={`/${element ? path : ""}`} className="block">
+                    <p className="m-2 hover:text-[#7a76ff] transition-colors duration-300">{title}</p>
+                  </a>
+                ))}
+              </div>
+            );
+          }}
+        >
+          {category}
         </Dropdown>
       ))}
     </div>
-  )
+  );
 }
 
 export default Nav

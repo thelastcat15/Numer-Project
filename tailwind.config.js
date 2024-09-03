@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Open Sans"', 'sans-serif'],
+        katex: ["KaTeX_Math"],
+        sans: ['Open Sans', 'sans-serif'],
       },
     },
     container: {
