@@ -9,6 +9,7 @@ import './css/index.css'
 
 import Nav from "./components/Nav"
 import Home from './pages/Home'
+import Test from "./pages/test"
 import Graphical from './pages/root/graphical'
 
 const Topics = {
@@ -123,6 +124,9 @@ const routes = [
     path: "/",
     element: <Home />,
   },
+  {
+    path: "/test",
+    element: <Test />
 ];
 
 Object.entries(Topics).forEach(([category, subtopics]) => {
