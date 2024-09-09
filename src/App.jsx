@@ -127,6 +127,7 @@ const routes = [
   {
     path: "/test",
     element: <Test />
+  }
 ];
 
 Object.entries(Topics).forEach(([category, subtopics]) => {
