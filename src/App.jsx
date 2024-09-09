@@ -9,7 +9,7 @@ import './css/index.css'
 
 import Nav from "./components/Nav"
 import Home from './pages/Home'
-import Test from "./pages/test"
+import Test from "./pages/Test"
 import Graphical from './pages/root/graphical'
 
 const Topics = {
