@@ -13,10 +13,13 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "framer-motion": "^11.3.31",
+    "plotly.js": "^2.35.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-katex": "^3.0.1",
-    "react-router-dom": "^6.26.1"
+    "react-plotly.js": "^2.6.0",
+    "react-router-dom": "^6.26.1",
+    "styled-components": "^6.1.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

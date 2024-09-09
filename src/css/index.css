@@ -2,10 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  min-height: 300vh !important;
+  min-height: 120vh !important;
   margin: 0;
   padding: 0;
   background-color: #000000;
   color: white;
+}
+
+.katex-display {
+  margin: .7em 0;
 }
