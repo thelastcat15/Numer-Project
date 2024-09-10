@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js';
-import KaTeXComponent from "../../components/Katex"
-import ToggleForm from '../../components/ToggleForm';
+import KaTeXComponent from "@components/Katex"
+import ToggleForm from './toggleForm';
 
 function graphical() {
+  const [myX, setX] = useState([0, 1, 2])
+  const [myY, setY] = useState([-18, -9, 0])
   const [katexText, setKatexText] = useState('...');
-  const [showModel, setShowModel] = useState(false);
+
+  useEffect(() => {
+    console.log("myX:", myX);
+    console.log("myY:", myY);
+  }, [myX, myY]);
 
   return (
     <>
       <div className="w-[90%] max-w-6xl mx-auto mt-[8rem] mb-[3.5rem] flex flex-col space-y-4">
-        
         <div className="ml-5 sans font-bold leading-normal container">
           <p className='text-3xl'>Root of Equation</p>
           <p className='text-xl text-[#7A76FF] mt-1'>Graphical Methods</p>
         </div>
-        <KaTeXComponent expression={'f(x) = '+katexText+showModel} />
+        <KaTeXComponent expression={'f(x) = ' + katexText} />
 
         <div className="container">
           <Plot
             data={[
               {
-                x: [
-                  0,
-                  1,
-                  2
-                ],
-                  y: [
-                    -18,
-                    -9,
-                    0
-                ],
+                x: myX,
+                y: myY,
                 type: 'scatter',
                 mode: 'lines+markers',
                 marker: {
@@ -46,7 +43,7 @@ function graphical() {
             ]}
             layout={{
               xaxis: {
-                range: [-1, 3],
+                range: [Math.min(myX)-1, Math.max(myX)+1],
                 tickfont: {
                   color: 'white',
                 },
@@ -54,7 +51,7 @@ function graphical() {
                 zerolinecolor: 'white',
               },
               yaxis: {
-                range: [-19, 1],
+                range: [Math.min(myY)-1, Math.max(myY)+1],
                 tickfont: {
                   color: 'white',
                 },
@@ -85,9 +82,9 @@ function graphical() {
         </div>
       </div>
       <ToggleForm
-        isToggle={showModel}
-        setIsToggle={setShowModel}
-        setKatexText={setKatexText}
+        setKatex={setKatexText}
+        setX={setX}
+        setY={setY}
       />
     </>
   )

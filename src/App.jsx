@@ -8,9 +8,9 @@ import { createRoot } from 'react-dom/client'
 import './css/index.css'
 
 import Nav from "./components/Nav"
-import Home from './pages/Home'
-import Test from "./pages/Test"
-import Graphical from './pages/root/graphical'
+import Home from "./routes/Home"
+import Test from "./routes/Test"
+import Graphical from './routes/root/graphical/graphical'
 
 const Topics = {
   "Root of Equation": {
