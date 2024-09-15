@@ -141,6 +141,13 @@ Object.entries(Topics).forEach(([category, subtopics]) => {
   })
 })
 
+Object.keys(Topics).forEach(([category, subtopics]) => {
+  Object.entries(subtopics).forEach(([title, { path, element }]) => {
+    
+  })
+})
+
+
 createRoot(document.getElementById("root")).render(
   <>
     <Nav topics={Topics} />
