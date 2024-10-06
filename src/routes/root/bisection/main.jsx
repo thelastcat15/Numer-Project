@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js';
 import KaTeXComponent from "@components/Katex"
-import ToggleForm from './ToggleForm';
+import ToggleForm from './toggleForm';
 
 
 function main() {
