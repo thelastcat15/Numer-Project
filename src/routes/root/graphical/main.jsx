@@ -3,19 +3,22 @@ import Plot from 'react-plotly.js';
 import KaTeXComponent from "@components/Katex"
 import ToggleForm from './ToggleForm';
 
-
-function bisection() {
+function main() {
   const [myX, setX] = useState([0, 1, 2])
   const [myY, setY] = useState([-18, -9, 0])
   const [katexText, setKatexText] = useState('...');
 
+  useEffect(() => {
+    console.log("myX:", myX);
+    console.log("myY:", myY);
+  }, [myX, myY]);
 
   return (
     <>
       <div className="w-[90%] max-w-6xl mx-auto mt-[8rem] mb-[3.5rem] flex flex-col space-y-4">
         <div className="ml-5 sans font-bold leading-normal container">
           <p className='text-3xl'>Root of Equation</p>
-          <p className='text-xl text-[#7A76FF] mt-1'>Bisection Methods</p>
+          <p className='text-xl text-[#7A76FF] mt-1'>Graphical Methods</p>
         </div>
         <KaTeXComponent expression={'f(x) = ' + katexText} />
 
@@ -87,4 +90,4 @@ function bisection() {
   )
 }
 
-export default bisection
+export default main

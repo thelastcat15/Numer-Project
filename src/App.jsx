@@ -10,9 +10,9 @@ import './css/index.css'
 import Nav from "./components/Nav"
 import Home from "./routes/Home"
 import Test from "./routes/Test"
-import Graphical from './routes/root/graphical/graphical'
-import Bisection from './routes/root/bisection/bisection'
-import FalsePosition from './routes/root/falsePosition/falsePosition'
+import Graphical from './routes/root/graphical/main'
+import Bisection from './routes/root/bisection/main'
+import FalsePosition from './routes/root/falsePosition/main'
 
 const Topics = {
   "Root of Equation": {
