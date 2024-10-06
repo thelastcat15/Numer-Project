@@ -2,7 +2,7 @@ function myFix(x, dimen) {
     return parseFloat(x.toFixed(dimen));
 }
 
-export function cal(start, end, error, func) {
+export function calculate(start, end, error, func) {
   var newFunc = func.replace(/(\d)(x)/g, "$1*$2");
   newFunc = newFunc.replace(/\(x\)/g, "*x");
   let dimention

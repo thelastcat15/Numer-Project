@@ -1,7 +1,6 @@
-import axios from 'axios';
 import React, { useState } from 'react'
 import { InlineMath } from 'react-katex';
-import { cal } from './calculate';
+import { calculate } from './calculate';
 
 function ToggleForm({ setKatex, setX, setY }) {
   const [errorText, setErrorText] = useState('');
@@ -36,7 +35,7 @@ function ToggleForm({ setKatex, setX, setY }) {
     setIsLoading(true);
 
     try {
-      const result = cal(start, end, error, func);
+      const result = calculate(start, end, error, func);
       setX(result.x)
       setY(result.y)
     } catch (error) {
