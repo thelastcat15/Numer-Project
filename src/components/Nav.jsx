@@ -51,7 +51,7 @@ function Nav({ topics }) {
   const { scrollYProgress } = useScroll();
 
   useMotionValueEvent(scrollYProgress, 'change', (value) => {
-    setIsShow(value == 0 || value < lastY);
+    setIsShow(value <= 1 || value < lastY);
     setLastY(value);
   });
 

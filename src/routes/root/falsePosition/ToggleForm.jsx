@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { InlineMath } from 'react-katex';
-import { cal } from './calculate';
 
 function ToggleForm({ setKatex, setX, setY }) {
   const [errorText, setErrorText] = useState('');
@@ -36,11 +35,32 @@ function ToggleForm({ setKatex, setX, setY }) {
     setIsLoading(true);
 
     try {
-      const result = cal(start, end, error, func);
-      setX(result.x)
-      setY(result.y)
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/root/graphical`,
+        {
+          start: start,
+          end: end,
+          error: error,
+          func: func,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: 5000
+        }
+      );
+      setErrorText("");
+      setX(response.data.result.x)
+      setY(response.data.result.y)
     } catch (error) {
-      console.log("Some thing went wrong");
+      if (error.response) {
+        setErrorText(error.response.data.error);
+      } else if (error.request) {
+        setErrorText("Server Down")
+      } else {
+        setErrorText(error.message);
+      }
     } finally {
       setIsLoading(false);
     }

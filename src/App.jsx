@@ -11,6 +11,8 @@ import Nav from "./components/Nav"
 import Home from "./routes/Home"
 import Test from "./routes/Test"
 import Graphical from './routes/root/graphical/graphical'
+import Bisection from './routes/root/bisection/bisection'
+import FalsePosition from './routes/root/falsePosition/falsePosition'
 
 const Topics = {
   "Root of Equation": {
@@ -20,11 +22,11 @@ const Topics = {
     },
     "Bisection Search": {
       "path": "root/bisection",
-      "element": null
+      "element": <Bisection />
     },
     "False-position Methods": {
       "path": "root/false-position",
-      "element": null
+      "element": <FalsePosition />
     },
     "One-point Iteration Methods": {
       "path": "root/one-point-iteration",
@@ -126,7 +128,7 @@ const routes = [
   },
   {
     path: "/test",
-    element: <Test />
+    element: null
   }
 ];
 
@@ -140,13 +142,6 @@ Object.entries(Topics).forEach(([category, subtopics]) => {
     }
   })
 })
-
-Object.keys(Topics).forEach(([category, subtopics]) => {
-  Object.entries(subtopics).forEach(([title, { path, element }]) => {
-    
-  })
-})
-
 
 createRoot(document.getElementById("root")).render(
   <>
