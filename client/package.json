@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.13.0",
     "axios": "^1.7.7",
     "framer-motion": "^11.3.31",
-    "mathjs": "^13.1.1",
+    "mathjs": "^13.2.0",
     "plotly.js": "^2.35.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",

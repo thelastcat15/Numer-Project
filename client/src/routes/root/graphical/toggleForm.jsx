@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { InlineMath } from 'react-katex';
-import { calculate } from './calculate';
+import { calculate, getResult } from './calculate';
 
 function ToggleForm({ setKatex, setX, setY }) {
   const [errorText, setErrorText] = useState('');
@@ -35,11 +35,12 @@ function ToggleForm({ setKatex, setX, setY }) {
     setIsLoading(true);
 
     try {
-      const result = calculate(start, end, error, func);
+      const result = calculate(parseFloat(start), parseFloat(end), parseFloat(error), func);
       setX(result.x)
       setY(result.y)
     } catch (error) {
-      console.log("Some thing went wrong");
+      console.log("Some thing went wrong", error);
+      // setErrorText(error);
     } finally {
       setIsLoading(false);
     }

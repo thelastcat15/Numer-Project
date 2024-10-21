@@ -12,7 +12,7 @@ import Home from "./routes/Home"
 import Test from "./routes/Test"
 import Graphical from './routes/root/graphical/main'
 import Bisection from './routes/root/bisection/main'
-import FalsePosition from './routes/root/falsePosition/main'
+// import FalsePosition from './routes/root/falsePosition/main'
 
 const Topics = {
   "Root of Equation": {
@@ -26,7 +26,7 @@ const Topics = {
     },
     "False-position Methods": {
       "path": "root/false-position",
-      "element": <FalsePosition />
+      "element": null//<FalsePosition />
     },
     "One-point Iteration Methods": {
       "path": "root/one-point-iteration",

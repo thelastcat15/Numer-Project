@@ -1,6 +1,7 @@
-import axios from 'axios';
 import React, { useState } from 'react'
 import { InlineMath } from 'react-katex';
+import { calculate } from './calculate';
+import { Button, Container, Form, Table } from "react-bootstrap";
 
 function ToggleForm({ setKatex, setX, setY }) {
   const [errorText, setErrorText] = useState('');
@@ -18,15 +19,17 @@ function ToggleForm({ setKatex, setX, setY }) {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    if (id === 'start') {
-      setStart(value);
-    } else if (id === 'end') {
-      setEnd(value);
-    } else if (id === 'error') {
-      setError(value);
-    } else if (id === 'func') {
-      setFunc(value);
-      setKatex(value);
+    if (value != "") {
+      if (id === 'start') {
+        setStart(parseFloat(value));
+      } else if (id === 'end') {
+        setEnd(parseFloat(value));
+      } else if (id === 'error') {
+        setError(parseFloat(value));
+      } else if (id === 'func') {
+        setFunc(value);
+        setKatex(value);
+      }
     }
   };
 
@@ -35,32 +38,11 @@ function ToggleForm({ setKatex, setX, setY }) {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/root/graphical`,
-        {
-          start: start,
-          end: end,
-          error: error,
-          func: func,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          timeout: 5000
-        }
-      );
-      setErrorText("");
-      setX(response.data.result.x)
-      setY(response.data.result.y)
+      const result = calculate(start, end, error, func);
+      setX(result.xm)
+      setY(result.y)
     } catch (error) {
-      if (error.response) {
-        setErrorText(error.response.data.error);
-      } else if (error.request) {
-        setErrorText("Server Down")
-      } else {
-        setErrorText(error.message);
-      }
+      console.log("Some thing went wrong", error);
     } finally {
       setIsLoading(false);
     }

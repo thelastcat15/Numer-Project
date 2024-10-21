@@ -78,6 +78,7 @@ function main() {
               displayModeBar: false
             }}
             style={{ width: '100%', height: '60vh' }}
+            useResizeHandler={true}
           />
         </div>
       </div>
