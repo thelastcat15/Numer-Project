@@ -2,18 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+html, body {
   scroll-behavior: smooth;
-}
-
-body {
   /* min-height: 120vh !important; */
   margin: 0;
   padding: 0;
-  background-color: #000000;
+  /* background-color: #000000; */
   color: white;
+
+  height: 100%;
+  
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: linear-gradient(
+    45deg,
+    #000000,
+    #000000,
+    #000000,
+    #18093a,
+    #18093a,
+    #2e1b4d,
+    #100033
+  );
 }
 
 .katex-display {
   margin: .7em 0;
+}
+
+#plot-container {
+  border-radius: 15px; /* Rounded corners */
+  overflow: hidden; /* Clips content to match rounded border */
+  background: #1d073d; /* Container background color */
+  padding: 10px; /* Space around the plot */
+  border: 5px solid #4b2e83; /* Border color and width */
 }

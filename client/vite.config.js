@@ -11,6 +11,9 @@ export default defineConfig({
       // Add more aliases as needed
     },
   },
+  build: {
+    chunkSizeWarningLimit: 10000
+  }
 })
 
 

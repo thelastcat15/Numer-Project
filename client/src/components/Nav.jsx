@@ -48,26 +48,9 @@ function Nav({ topics }) {
   const [isShow, setIsShow] = useState(true);
   const controls = useAnimation();
 
-  const { scrollYProgress } = useScroll();
-
-  useMotionValueEvent(scrollYProgress, 'change', (value) => {
-    setIsShow(value <= 1 || value < lastY);
-    setLastY(value);
-  });
-
-  useEffect(() => {
-    controls.start({
-      y: isShow ? '0px' : '-60px',
-      transition: { duration: 0.3, ease: 'easeInOut' },
-    });
-  }, [isShow, controls]);
-
   return (
     <>
-      <motion.div
-        animate={controls}
-        className={`flex sans font-semibold py-4 justify-evenly fixed top-0 w-full border-b-2 border-greyBorder backdrop-blur-md z-[99]`}
-      >
+      <div className={`flex sans font-semibold py-4 justify-evenly fixed top-0 w-full backdrop-blur-md z-[99]`}>
         {Object.entries(topics).map(([category, subtopics]) => (
           <Dropdown
             key={category}
@@ -92,7 +75,7 @@ function Nav({ topics }) {
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
           </svg>
         </button>
-      </motion.div>
+      </div>
     </>
   );
 }
