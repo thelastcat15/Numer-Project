@@ -20,13 +20,10 @@ const calculate = (a, b, tolerance, equation) => {
         Y_C: [],
     };
 
-    data["LineX"] = Array.from({
-        length: parseInt(b) - parseInt(a) + 1
-    }).map((_, i) => i - 10)
-    data["LineY"] = Array.from({
-        length: parseInt(b) - parseInt(a) + 1
-    }).map((_, i) => {
-        const x = i - 10;
+    const length = b - a + 1;
+    data["LineX"] = Array.from({ length }, (_, i) => i + a),
+    data["LineY"] = Array.from({ length }, (_, i) => {
+        const x = i + a;
         return f(x);
     })
 
