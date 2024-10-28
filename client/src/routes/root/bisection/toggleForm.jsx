@@ -1,35 +1,172 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import { InlineMath } from 'react-katex';
 import { calculate } from './calculate';
-import { Button, Container, Form, Table } from "react-bootstrap";
 
-function ToggleForm({ setKatex, setX, setY }) {
+
+function ToggleForm({ isToggle, setIsToggle, setKatex, setDataGraph }) {
   const [errorText, setErrorText] = useState('');
-  const [isToggle, setIsToggle] = useState(false);
+  const [successText, setSuccessText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPos, setStartPos] = useState({ x: 50, y: 50 });
 
   const [start, setStart] = useState(0.0);
   const [end, setEnd] = useState(10.0);
   const [error, setError] = useState(0.01);
   const [func, setFunc] = useState('');
 
-  const toggleFunc = () => {
-    setIsToggle(!isToggle);
+  const formRef = useRef(null);
+  const dragHandleRef = useRef(null);
+
+  useEffect(() => {
+    if (!isDragging) {
+      const snapToSide = () => {
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const formWidth = formRef.current?.offsetWidth || 400;
+        const formHeight = formRef.current?.offsetHeight || 300;
+
+        const x = position.x;
+        const y = position.y;
+        const minX = -screenWidth + formWidth;
+        const minY = -screenHeight + formHeight;
+
+        setPosition({
+          x: (x < minX / 2 ? minX : 0),
+          y: (y < minY ? minY : (y > 0 ? 0 : y))
+        });
+      };
+      snapToSide();
+    }
+  }, [isDragging]);
+
+  const handleMouseDown = (e) => {
+    if (e.target === dragHandleRef.current || dragHandleRef.current?.contains(e.target)) {
+      setIsDragging(true);
+      setStartPos({
+        x: e.clientX - position.x,
+        y: e.clientY - position.y
+      });
+    }
   };
+
+  const handleTouchStart = (e) => {
+    if (e.target === dragHandleRef.current || dragHandleRef.current?.contains(e.target)) {
+      setIsDragging(true);
+      setStartPos({
+        x: e.touches[0].clientX - position.x,
+        y: e.touches[0].clientY - position.y
+      });
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+         
+    setPosition({
+      x: e.clientX - startPos.x,
+      y: e.clientY - startPos.y
+    });
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+        
+    setPosition({
+      x: e.touches[0].clientX - startPos.x,
+      y: e.touches[0].clientY - startPos.y
+    });
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleDragEnd);
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleDragEnd);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleDragEnd);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleDragEnd);
+    };
+  }, [isDragging, startPos]);
+
+
+  const random = (...args) => {
+    setErrorText("")
+    setSuccessText("")
+    axios.get(
+      `${import.meta.env.VITE_API_URL}/load/rootequation/all`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    ).then(res => {
+      const eq = res.data.equations[0].equation
+      setKatex(eq);
+      setFunc(eq);
+    }).catch(err => {
+      if (err.response) {
+        setErrorText(`${err.response.data.message}`);
+      } else if (err.request) {
+        setErrorText('Server Down');
+      } else {
+        console.log('Error:', err.message);
+        // setErrorText(`Error: ${err.message}`);
+      }
+    })
+  }
+
+  const save = (...args) => {
+    setErrorText("")
+    setSuccessText("")
+    axios.post(
+      `${import.meta.env.VITE_API_URL}/save/rootequation/all`,
+      {
+        equation: func
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    ).then(res => {
+      setSuccessText("Saved")
+    }).catch(err => {
+      if (err.response) {
+        setErrorText(`${err.response.data.message}`);
+      } else if (err.request) {
+        setErrorText('Server Down');
+      } else {
+        console.log('Error:', err.message);
+        // setErrorText(`Error: ${err.message}`);
+      }
+    })
+  }
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    if (value != "") {
-      if (id === 'start') {
-        setStart(parseFloat(value));
-      } else if (id === 'end') {
-        setEnd(parseFloat(value));
-      } else if (id === 'error') {
-        setError(parseFloat(value));
-      } else if (id === 'func') {
-        setFunc(value);
+    if (id === 'start') {
+      setStart(value);
+    } else if (id === 'end') {
+      setEnd(value);
+    } else if (id === 'error') {
+      setError(value);
+    } else if (id === 'func') {
+      if (value === "") {
+        setKatex("...");
+      } else {
         setKatex(value);
       }
+      setFunc(value);
     }
   };
 
@@ -38,9 +175,20 @@ function ToggleForm({ setKatex, setX, setY }) {
     setIsLoading(true);
 
     try {
-      const result = calculate(start, end, error, func);
-      setX(result.xm)
-      setY(result.y)
+      setErrorText("")
+      setSuccessText("")
+
+      if (start===""||end===""||error===""||func==="") {
+        setErrorText("fields are required!");
+      } else {
+        const result = calculate(start, end, error, func);
+        console.log(result);
+        if (result) {
+          setDataGraph(result);
+        } else {
+          setErrorText("Out of range!")
+        }
+      }
     } catch (error) {
       console.log("Some thing went wrong", error);
     } finally {
@@ -50,36 +198,32 @@ function ToggleForm({ setKatex, setX, setY }) {
 
   return (
     <>
-      <div
-        className={`fixed bottom-0 right-0 m-5 p-3.5 bg-black border-2 border-blue-500 cursor-pointer rounded-full`}
-        onClick={toggleFunc}
-      >
-        <svg
-          className="h-8 w-8 text-blue-500"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          strokeWidth="2"
-          stroke="currentColor"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path stroke="none" d="M0 0h24v24H0z" />
-          <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-          <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-        </svg>
-      </div>
       {isToggle && (
-        <div className="p-4 w-full max-w-md max-h-full fixed bottom-0 right-0">
+        <div
+          ref={formRef}
+          className="p-4 w-full max-w-md max-h-full fixed bottom-0 right-0"
+          style={{
+            transform: `translate(${position.x}px, ${position.y}px)`,
+            transition: isDragging ? 'none' : 'transform 0.3s ease-out',
+            touchAction: 'none',
+            zIndex: 1000
+          }}
+        >
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-800">
-            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <div 
+              ref={dragHandleRef}
+              className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 cursor-move"
+              onMouseDown={handleMouseDown}
+              onTouchStart={handleTouchStart}
+            >
               <h3 className="text-xl sans font-bold tracking-wide text-gray-900 dark:text-white">
                 EDIT
               </h3>
               <button
                 type="button"
-                onClick={toggleFunc}
+                onClick={() => {
+                  setIsToggle(!isToggle);
+                }}
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 data-modal-hide="default-modal"
               >
@@ -172,8 +316,29 @@ function ToggleForm({ setKatex, setX, setY }) {
                       <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Calculate
                       </button>
+                      <button
+                        type="button"
+                        onClick={random}
+                        className="ml-3 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                      >
+                        <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 14 3-3m-3 3 3 3m-3-3h16v-3m2-7-3 3m3-3-3-3m3 3H3v3"></path>
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={save}
+                        className="ml-3 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                      >
+                        <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"></path>
+                        </svg>
+                      </button>
                       <p className="text-red-600 text-sm font-bold ml-3">
                         {errorText}
+                      </p>
+                      <p className="text-green-600 text-sm font-bold ml-3">
+                        {successText}
                       </p>
                     </div>
                   )

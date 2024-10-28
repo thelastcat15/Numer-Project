@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { InlineMath } from 'react-katex';
-import { calculate, getResult } from './calculate';
+import { calculate } from './calculate';
 
 
-function ToggleForm({ setKatex, setX, setY }) {
+function ToggleForm({ isToggle, setIsToggle, setKatex, setDataGraph }) {
   const [errorText, setErrorText] = useState('');
   const [successText, setSuccessText] = useState('');
-  const [isToggle, setIsToggle] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -99,9 +98,6 @@ function ToggleForm({ setKatex, setX, setY }) {
     };
   }, [isDragging, startPos]);
 
-  const toggleFunc = () => {
-    setIsToggle(!isToggle);
-  };
 
   const random = (...args) => {
     setErrorText("")
@@ -165,8 +161,12 @@ function ToggleForm({ setKatex, setX, setY }) {
     } else if (id === 'error') {
       setError(value);
     } else if (id === 'func') {
+      if (value === "") {
+        setKatex("...");
+      } else {
+        setKatex(value);
+      }
       setFunc(value);
-      setKatex(value);
     }
   };
 
@@ -175,9 +175,20 @@ function ToggleForm({ setKatex, setX, setY }) {
     setIsLoading(true);
 
     try {
-      const result = calculate(parseFloat(start), parseFloat(end), parseFloat(error), func);
-      setX(result.x)
-      setY(result.y)
+      setErrorText("")
+      setSuccessText("")
+
+      if (start===""||end===""||error===""||func==="") {
+        setErrorText("fields are required!");
+      } else {
+        const result = calculate(start, end, error, func);
+        console.log(result);
+        if (result) {
+          setDataGraph(result);
+        } else {
+          setErrorText("Out of range!")
+        }
+      }
     } catch (error) {
       console.log("Some thing went wrong", error);
     } finally {
@@ -187,15 +198,6 @@ function ToggleForm({ setKatex, setX, setY }) {
 
   return (
     <>
-      <div
-        className={`fixed bottom-0 right-0 m-5 p-3.5 bg-black border-2 border-blue-500 cursor-pointer rounded-full`}
-        onClick={toggleFunc}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
-        </svg>
-
-      </div>
       {isToggle && (
         <div
           ref={formRef}
@@ -219,7 +221,9 @@ function ToggleForm({ setKatex, setX, setY }) {
               </h3>
               <button
                 type="button"
-                onClick={toggleFunc}
+                onClick={() => {
+                  setIsToggle(!isToggle);
+                }}
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 data-modal-hide="default-modal"
               >
@@ -326,7 +330,7 @@ function ToggleForm({ setKatex, setX, setY }) {
                         onClick={save}
                         className="ml-3 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                       >
-                        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
+                        <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
                           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"></path>
                         </svg>
                       </button>

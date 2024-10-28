@@ -10,7 +10,8 @@ html, body {
   /* background-color: #000000; */
   color: white;
 
-  height: 100%;
+  min-height: 100vh;
+  max-height: 100vh;
   
   background-position: center;
   background-repeat: no-repeat;
@@ -37,4 +38,13 @@ html, body {
   background: #1d073d; /* Container background color */
   padding: 10px; /* Space around the plot */
   border: 5px solid #4b2e83; /* Border color and width */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
 }
