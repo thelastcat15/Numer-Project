@@ -16,13 +16,13 @@ const calculate = (start, end, error, func) => {
     end = parseFloat(end);
     error = parseFloat(error);
 
-    let dimention = checkDigitPlace(start - end)
     if (evaluate(func, { x: start }) * evaluate(func, { x: end }) > 0) {
         return
     }
 
     let iteration = 0
     const log = {X:[],Y:[]}
+    let dimention = checkDigitPlace(start - end)
     while (iteration < maxIteration) {
         let y;
         let repeat = false

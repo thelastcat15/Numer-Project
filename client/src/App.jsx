@@ -9,10 +9,10 @@ import './css/index.css'
 
 import Nav from "./components/Nav"
 import Home from "./routes/Home"
-import Test from "./routes/Test"
+import Test from "./routes/test/main"
 import Graphical from './routes/root/graphical/main'
 import Bisection from './routes/root/bisection/main'
-// import FalsePosition from './routes/root/falsePosition/main'
+import FalsePosition from './routes/root/falsePositive/main'
 
 const Topics = {
   "Root of Equation": {
@@ -26,7 +26,7 @@ const Topics = {
     },
     "False-position Methods": {
       "path": "root/false-position",
-      "element": null//<FalsePosition />
+      "element": <FalsePosition />
     },
     "One-point Iteration Methods": {
       "path": "root/one-point-iteration",
@@ -128,7 +128,7 @@ const routes = [
   },
   {
     path: "/test",
-    element: null
+    element: <Test />
   }
 ];
 

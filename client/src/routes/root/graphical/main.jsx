@@ -5,33 +5,33 @@ import ToggleForm from './toggleForm';
 
 function main() {
   const [dataGraph, setDataGraph] = useState({
-    X: [0,-1,-2,-3],
-    Y: [0,-1,-2,-3],
+    X: [0,1,2,3],
+    Y: [0,1,2,3],
   });
 
-  const rowEachPage = 200;
-  const [page, setPage] = useState(1);
-  const [startRow, setStartRow] = useState(0);
-  const [endRow, setEndRow] = useState(rowEachPage);
+  // const rowEachPage = 200;
+  // const [page, setPage] = useState(1);
+  // const [startRow, setStartRow] = useState(0);
+  // const [endRow, setEndRow] = useState(rowEachPage);
 
-  useEffect(() => {
-    const tempStartRow = (page - 1) * rowEachPage;
-    const tempEndRow = Math.min(page * rowEachPage, dataGraph.X.length);
-    setStartRow(tempStartRow);
-    setEndRow(tempEndRow);
-  }, [page, dataGraph]);
+  // useEffect(() => {
+  //   const tempStartRow = (page - 1) * rowEachPage;
+  //   const tempEndRow = Math.min(page * rowEachPage, dataGraph.X.length);
+  //   setStartRow(tempStartRow);
+  //   setEndRow(tempEndRow);
+  // }, [page, dataGraph]);
 
-  const handleNextPage = () => {
-    if (endRow < dataGraph.X.length) {
-      setPage(page + 1);
-    }
-  };
+  // const handleNextPage = () => {
+  //   if (endRow < dataGraph.X.length) {
+  //     setPage(page + 1);
+  //   }
+  // };
 
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
+  // const handlePreviousPage = () => {
+  //   if (page > 1) {
+  //     setPage(page - 1);
+  //   }
+  // };
 
   const [isToggle, setIsToggle] = useState(false);
   const [openGraph, setOpenGraph] = useState(true)
@@ -51,8 +51,10 @@ function main() {
             openGraph && (<Plot
               data={[
                 {
-                  x: dataGraph.X.filter((_, index) => Math.abs(dataGraph.Y[index]) >= 0.01),
-                  y: dataGraph.Y.filter((xValue) => Math.abs(xValue) >= 0.01),
+                  // x: dataGraph.X.filter((_, index) => Math.abs(dataGraph.Y[index]) >= 0.0001 || Math.abs(dataGraph.Y[index]) == 0),
+                  // y: dataGraph.Y.filter((xValue) => Math.abs(xValue) >= 0.0001 || xValue == 0),
+                  x: dataGraph.X,
+                  y: dataGraph.Y,
                   type: 'scatter',
                   mode: 'lines+markers',
                   marker: {
@@ -127,11 +129,12 @@ function main() {
                     </tr>
                   </thead>
                   <tbody>
-                    {dataGraph.X.slice(startRow, endRow).map((xValue, index) => (
-                      <tr key={index + startRow} className="border-b border-gray-700">
-                        <td className="px-6 py-4">{index + startRow}</td>
+                    {/* {dataGraph.X.slice(startRow, endRow).map((xValue, index) => ( */}
+                    {dataGraph.X.map((xValue, index) => (
+                      <tr key={index} className="border-b border-gray-700">
+                        <td className="px-6 py-4">{index+1}</td>
                         <td className="px-6 py-4">{xValue}</td>
-                        <td className="px-6 py-4">{dataGraph.Y[startRow + index]}</td>
+                        <td className="px-6 py-4">{dataGraph.Y[index]}</td>
                       </tr>
                     ))}
                   </tbody>

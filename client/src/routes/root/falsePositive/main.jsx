@@ -5,8 +5,10 @@ import ToggleForm from './toggleForm';
 
 function main() {
   const [dataGraph, setDataGraph] = useState({
-    X: [0,1,2,3],
-    Y: [0,1,2,3],
+    LineX: [],
+    LineY: [],
+    C: [],
+    Y_C: [],
   });
 
   // const rowEachPage = 200;
@@ -43,74 +45,91 @@ function main() {
       <div className="w-[90%] max-w-5xl mx-auto pt-[6rem] pb-[3.5rem] flex flex-col space-y-4 text-center gap-5">
         <div className="ml-5 sans font-bold leading-normal container">
           {/* <p className='text-3xl'>Root of Equation</p> */}
-          <p className='text-3xl'>Bisection Search</p>
+          <p className='text-3xl'>False-position Methods</p>
         </div>
         <KaTeXComponent expression={'f(x) = ' + katexText} />
         <div className="container">
           {
-            openGraph && (<Plot
-              data={[
-                {
-                  // x: dataGraph.X.filter((_, index) => Math.abs(dataGraph.Y[index]) >= 0.0001 || Math.abs(dataGraph.Y[index]) == 0),
-                  // y: dataGraph.Y.filter((xValue) => Math.abs(xValue) >= 0.0001 || xValue == 0),
-                  x: dataGraph.X,
-                  y: dataGraph.Y,
-                  type: 'scatter',
-                  mode: 'lines+markers',
-                  marker: {
-                    color: '#7dc5ff',
-                    size: 8,
+            openGraph && (
+              <Plot
+                data={[
+                  {
+                    x: dataGraph.LineX,
+                    y: dataGraph.LineY,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {
+                      color: '#7a76ff',
+                      width: 2,
+                    },
+                    name: 'f(x)',
                   },
-                  line: {
-                    color: '#7a76ff',
-                    width: 2,
-                    simplify: false
+                  {
+                    x: dataGraph.C,
+                    y: dataGraph.Y_C,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: {
+                      color: '#7dc5ff',
+                      size: 8,
+                    },
+                    line: {
+                      color: '#7a76ff',
+                      width: 2,
+                      simplify: false,
+                    },
+                    name: 'False-Position',
                   },
-                }
-              ]}
-              layout={{
-                xaxis: {
-                  range: [Math.min(dataGraph.X)-1, Math.max(dataGraph.X)+1],
-                  tickfont: {
-                    color: 'white',
+                ]}
+                layout={{
+                  xaxis: {
+                    range: [Math.min(dataGraph.LineX) - 1, Math.max(dataGraph.LineX) + 1],
+                    tickfont: {
+                      color: 'white',
+                    },
+                    gridcolor: '#3a3a3a',
+                    zerolinecolor: 'white',
                   },
-                  gridcolor: '#3a3a3a',
-                  zerolinecolor: 'white',
-                },
-                yaxis: {
-                  range: [Math.min(dataGraph.Y)-1, Math.max(dataGraph.Y)+1],
-                  tickfont: {
-                    color: 'white',
+                  yaxis: {
+                    range: [Math.min(dataGraph.LineY) - 1, Math.max(dataGraph.LineY) + 1],
+                    tickfont: {
+                      color: 'white',
+                    },
+                    gridcolor: '#3a3a3a',
+                    zerolinecolor: 'white',
                   },
-                  gridcolor: '#3a3a3a',
-                  zerolinecolor: 'white',
-                },
-                dragmode: 'pan',
-                plot_bgcolor: 'black',
-                paper_bgcolor: 'transparent',
-                hoverlabel: {
-                  font: {
-                    color: 'white',
+                  legend: {
+                    font: {
+                      color: '#a1a1a1',
+                    },
                   },
-                },
-                margin: {
-                  l: 25,
-                  r: 20,
-                  t: 20,
-                  b: 20,
-                },
-              }}
-              config={{
-                scrollZoom: true,
-                displayModeBar: false
-              }}
-              style={{
-                width: '100%',
-                height: '60vh',
-              }}
-              useResizeHandler={true}
-            />
-          )}
+                  dragmode: 'pan',
+                  plot_bgcolor: 'black',
+                  paper_bgcolor: 'transparent',
+                  hoverlabel: {
+                    font: {
+                      color: 'white',
+                    },
+                  },
+                  margin: {
+                    l: 25,
+                    r: 20,
+                    t: 20,
+                    b: 20,
+                  },
+                }}
+                config={{
+                  scrollZoom: true,
+                  displayModeBar: false,
+                }}
+                style={{
+                  width: '100%',
+                  height: '60vh',
+                }}
+                useResizeHandler={true}
+              />
+            )
+          }
           {
             openTable && dataGraph && (
               <div className="relative overflow-x-auto overflow-y-auto max-h-[calc(100vh-22rem)] shadow-md sm:rounded-lg no-scrollbar">
@@ -130,11 +149,11 @@ function main() {
                   </thead>
                   <tbody>
                     {/* {dataGraph.X.slice(startRow, endRow).map((xValue, index) => ( */}
-                    {dataGraph.X.map((xValue, index) => (
+                    {dataGraph.C.map((xValue, index) => (
                       <tr key={index} className="border-b border-gray-700">
                         <td className="px-6 py-4">{index+1}</td>
                         <td className="px-6 py-4">{xValue}</td>
-                        <td className="px-6 py-4">{dataGraph.Y[index]}</td>
+                        <td className="px-6 py-4">{dataGraph.Y_C[index]}</td>
                       </tr>
                     ))}
                   </tbody>
