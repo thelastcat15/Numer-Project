@@ -15,6 +15,7 @@ import Bisection from './routes/root/bisection/main'
 import FalsePosition from './routes/root/falsePositive/main'
 import OnePointIteration from './routes/root/onePointIteration/main'
 import NewtonRaphson from './routes/root/newtonRaphson/main'
+import Secant from './routes/root/secant/main'
 
 const Topics = {
   "Root of Equation": {
@@ -22,7 +23,7 @@ const Topics = {
       "path": "root/graphical",
       "element": <Graphical />
     },
-    "Bisection Search": {
+    "Bisection Methods": {
       "path": "root/bisection",
       "element": <Bisection />
     },
@@ -40,7 +41,7 @@ const Topics = {
     },
     "Secant Methods": {
       "path": "root/secant",
-      "element": null
+      "element": <Secant />
     }
   },
   "Linear Algebra Equation": {
@@ -146,8 +147,8 @@ Object.entries(Topics).forEach(([category, subtopics]) => {
 })
 
 createRoot(document.getElementById("root")).render(
-  <>
+  <div className='bg'>
     <Nav topics={Topics} />
     <RouterProvider router={createBrowserRouter(routes)} />
-  </>
+  </div>
 );

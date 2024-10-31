@@ -30,12 +30,11 @@ const calculate = (xInitial, tolerance, equation) => {
     do {
         const fPrimeVal = fPrime(xCurr);
         if (fPrimeVal === 0) {
-            console.log("f'(x) เป็นศูนย์ที่ x = " + xCurr);
             break;
         }
 
         let yCurr = f(xCurr);
-        xNext = xCurr - (yCurr / fPrime(xCurr));
+        xNext = xCurr - (yCurr / fPrimeVal);
         ea = checkError(xCurr, xNext);
 
         data["X"].push(xCurr);

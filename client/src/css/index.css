@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
+html, body, .bg {
   scroll-behavior: smooth;
   /* min-height: 120vh !important; */
   margin: 0;
@@ -12,10 +12,10 @@ html, body {
 
   min-height: 100vh;
   max-height: 100vh;
-  
+}
+
+.bg {
   background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   background: linear-gradient(
     45deg,
     #000000,

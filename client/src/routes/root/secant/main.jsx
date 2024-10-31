@@ -5,8 +5,10 @@ import ToggleForm from './toggleForm';
 
 function main() {
   const [dataGraph, setDataGraph] = useState({
-    X: [0,1,2,3],
-    Y: [0,1,2,3],
+    X: [],
+    Y: [],
+    LineFX: [],
+    LineFY: [],
   });
 
   // const rowEachPage = 200;
@@ -43,104 +45,116 @@ function main() {
       <div className="h-screen w-[90%] max-w-5xl mx-auto pt-[6rem] pb-[3.5rem] flex flex-col space-y-4 text-center gap-5">
         <div className="sans font-bold leading-normal container">
           {/* <p className='text-3xl'>Root of Equation</p> */}
-          <p className='text-3xl'>Bisection Methods</p>
+          <p className='text-3xl'>Secant Methods</p>
         </div>
         <KaTeXComponent expression={'f(x) = ' + katexText} />
         <div className="container">
           {
-            openGraph && (<Plot
-              data={[
-                {
-                  // x: dataGraph.X.filter((_, index) => Math.abs(dataGraph.Y[index]) >= 0.0001 || Math.abs(dataGraph.Y[index]) == 0),
-                  // y: dataGraph.Y.filter((xValue) => Math.abs(xValue) >= 0.0001 || xValue == 0),
-                  x: dataGraph.X,
-                  y: dataGraph.Y,
-                  type: 'scatter',
-                  mode: 'lines+markers',
-                  marker: {
-                    color: '#7dc5ff',
-                    size: 8,
+            openGraph && (
+              <Plot
+                data={[
+                  {
+                    x: dataGraph.LineFX,
+                    y: dataGraph.LineFY,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: {
+                      color: '#ff0000',
+                      width: 2,
+                    },
+                    name: 'f(x)',
                   },
-                  line: {
-                    color: '#7a76ff',
-                    width: 2,
-                    simplify: false
+                  {
+                    x: dataGraph.X,
+                    y: dataGraph.Y,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: {
+                      color: '#7dc5ff',
+                      size: 8,
+                    },
+                    line: {
+                      color: '#7a76ff',
+                      width: 2,
+                      simplify: false,
+                    },
+                    name: 'Newton Raphson',
                   },
-                }
-              ]}
-              layout={{
-                xaxis: {
-                  range: [Math.min(dataGraph.X)-1, Math.max(dataGraph.X)+1],
-                  tickfont: {
-                    color: 'white',
+                ]}
+                layout={{
+                  xaxis: {
+                    range: [Math.min(dataGraph.LineFX), Math.max(dataGraph.LineFX)],
+                    tickfont: {
+                      color: 'white',
+                    },
+                    gridcolor: '#3a3a3a',
+                    zerolinecolor: 'white',
                   },
-                  gridcolor: '#3a3a3a',
-                  zerolinecolor: 'white',
-                },
-                yaxis: {
-                  range: [Math.min(dataGraph.Y)-1, Math.max(dataGraph.Y)+1],
-                  tickfont: {
-                    color: 'white',
+                  yaxis: {
+                    range: [Math.min(dataGraph.LineFY), Math.max(dataGraph.LineFY)],
+                    tickfont: {
+                      color: 'white',
+                    },
+                    gridcolor: '#3a3a3a',
+                    zerolinecolor: 'white',
                   },
-                  gridcolor: '#3a3a3a',
-                  zerolinecolor: 'white',
-                },
-                dragmode: 'pan',
-                plot_bgcolor: 'black',
-                paper_bgcolor: 'transparent',
-                hoverlabel: {
-                  font: {
-                    color: 'white',
+                  legend: {
+                    font: {
+                      color: '#a1a1a1',
+                    },
                   },
-                },
-                margin: {
-                  l: 25,
-                  r: 20,
-                  t: 20,
-                  b: 20,
-                },
-              }}
-              config={{
-                scrollZoom: true,
-                displayModeBar: false
-              }}
-              style={{
-                width: '100%',
-                height: '60vh',
-              }}
-              useResizeHandler={true}
-            />
-          )}
+                  dragmode: 'pan',
+                  plot_bgcolor: 'black',
+                  paper_bgcolor: 'transparent',
+                  hoverlabel: {
+                    font: {
+                      color: 'white',
+                    },
+                  },
+                  margin: {
+                    l: 25,
+                    r: 20,
+                    t: 20,
+                    b: 20,
+                  },
+                }}
+                config={{
+                  scrollZoom: true,
+                  displayModeBar: false,
+                }}
+                style={{
+                  width: '100%',
+                  height: '60vh',
+                }}
+                useResizeHandler={true}
+              />
+            )
+          }
           {
             openTable && dataGraph && (
               <div className="relative overflow-x-auto overflow-y-auto max-h-[calc(100vh-22rem)] shadow-md sm:rounded-lg no-scrollbar">
                 <table className="w-full text-sm text-left text-gray-400">
                   <thead className="text-xs uppercase bg-gray-700 text-gray-400 sticky top-0">
                     <tr>
-                      <th scope="col" className="px-6 py-3 w-1/3">
-                        Iteration
-                      </th>
-                      <th scope="col" className="px-6 py-3 w-1/3">
-                        X
-                      </th>
-                      <th scope="col" className="px-6 py-3 w-1/3">
-                        Y
-                      </th>
+                      <th scope="col" className="px-6 py-3 w-1/3">Iteration</th>
+                      <th scope="col" className="px-6 py-3 w-1/3">X</th>
+                      <th scope="col" className="px-6 py-3 w-1/3">Y</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {/* {dataGraph.X.slice(startRow, endRow).map((xValue, index) => ( */}
-                    {dataGraph.X.map((xValue, index) => (
-                      <tr key={index} className="border-b border-gray-700">
-                        <td className="px-6 py-4">{index+1}</td>
-                        <td className="px-6 py-4">{xValue}</td>
-                        <td className="px-6 py-4">{dataGraph.Y[index]}</td>
-                      </tr>
-                    ))}
+                    {dataGraph.X
+                      .map((xValue, index) => ({ xValue, yValue: dataGraph.Y[index], index }))
+                      .filter((_, index) => index % 2 === 1)
+                      .map(({ xValue, yValue }, step) => (
+                        <tr key={step} className="border-b border-gray-700">
+                          <td className="px-6 py-4">{step + 1}</td>
+                          <td className="px-6 py-4">{xValue}</td>
+                          <td className="px-6 py-4">{yValue}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
-
             )
           }
         </div>
