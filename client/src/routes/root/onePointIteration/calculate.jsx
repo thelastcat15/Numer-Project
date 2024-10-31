@@ -42,6 +42,9 @@ const calculate = (xInitial, tolerance, equation) => {
     
     let min = Math.min(...data["X"]);
     let max = Math.max(...data["X"]);
+    let length = (max - min + 1)/10;
+    min -= length;
+    max += length;
 
     data["LineFX"] = []
     data["LineFY"] = []

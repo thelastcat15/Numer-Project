@@ -40,13 +40,6 @@ function main() {
   const [openTable, setOpenTable] = useState(false)
   const [katexText, setKatexText] = useState('...');
 
-  useEffect(() => {
-    const updatedText = katexText.replace(/x(?!_i)/g, 'x_i');
-    if (katexText !== updatedText) {
-      setKatexText(updatedText);
-    }
-  }, [katexText]);
-
   return (
     <>
       <div className="w-[90%] max-w-5xl mx-auto pt-[6rem] pb-[3.5rem] flex flex-col space-y-4 text-center gap-5">
@@ -54,7 +47,7 @@ function main() {
           {/* <p className='text-3xl'>Root of Equation</p> */}
           <p className='text-3xl'>One-point Iteration Methods</p>
         </div>
-        <KaTeXComponent expression={'x_{i+1} = ' + katexText} />
+        <KaTeXComponent expression={'f(x) = ' + katexText} />
         <div className="container">
           {
             openGraph && (
@@ -72,17 +65,6 @@ function main() {
                     name: 'f(x)',
                   },
                   {
-                    x: dataGraph.LineFX,
-                    y: dataGraph.LineFX,
-                    type: 'scatter',
-                    mode: 'lines',
-                    line: {
-                      color: '#d4d3ff',
-                      width: 1,
-                    },
-                    name: 'X = Y',
-                  },
-                  {
                     x: dataGraph.X,
                     y: dataGraph.Y,
                     type: 'scatter',
@@ -96,7 +78,7 @@ function main() {
                       width: 2,
                       simplify: false,
                     },
-                    name: 'One-Point',
+                    name: 'Newton Raphson',
                   },
                 ]}
                 layout={{
@@ -154,22 +136,15 @@ function main() {
                 <table className="w-full text-sm text-left text-gray-400">
                   <thead className="text-xs uppercase bg-gray-700 text-gray-400 sticky top-0">
                     <tr>
-                      <th scope="col" className="px-6 py-3 w-1/3">
-                        Iteration
-                      </th>
-                      <th scope="col" className="px-6 py-3 w-1/3">
-                        X
-                      </th>
-                      <th scope="col" className="px-6 py-3 w-1/3">
-                        Y
-                      </th>
+                      <th scope="col" className="px-6 py-3 w-1/3">Iteration</th>
+                      <th scope="col" className="px-6 py-3 w-1/3">X</th>
+                      <th scope="col" className="px-6 py-3 w-1/3">Y</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {/* {dataGraph.X.slice(startRow, endRow).map((xValue, index) => ( */}
                     {dataGraph.X
                       .map((xValue, index) => ({ xValue, yValue: dataGraph.Y[index], index }))
-                      .filter((_, index) => index % 2 === 0)
+                      .filter((_, index) => index % 2 === 1)
                       .map(({ xValue, yValue }, step) => (
                         <tr key={step} className="border-b border-gray-700">
                           <td className="px-6 py-4">{step + 1}</td>
@@ -180,7 +155,6 @@ function main() {
                   </tbody>
                 </table>
               </div>
-
             )
           }
         </div>

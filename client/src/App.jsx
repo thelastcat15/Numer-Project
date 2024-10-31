@@ -14,7 +14,7 @@ import Graphical from './routes/root/graphical/main'
 import Bisection from './routes/root/bisection/main'
 import FalsePosition from './routes/root/falsePositive/main'
 import OnePointIteration from './routes/root/onePointIteration/main'
-// import NewtonRaphson from './routes/root/newtonRaphson/main'
+import NewtonRaphson from './routes/root/newtonRaphson/main'
 
 const Topics = {
   "Root of Equation": {
@@ -36,7 +36,7 @@ const Topics = {
     },
     "Newton-Raphson Methods": {
       "path": "root/newton-raphson",
-      "element": null //<NewtonRaphson />
+      "element": <NewtonRaphson />
     },
     "Secant Methods": {
       "path": "root/secant",
