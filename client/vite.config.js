@@ -11,6 +11,9 @@ export default defineConfig({
       // Add more aliases as needed
     },
   },
+  server: {
+    host: "26.145.139.40",
+  },
   build: {
     chunkSizeWarningLimit: 10000
   }

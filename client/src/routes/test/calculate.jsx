@@ -45,5 +45,3 @@ const calculate = (a, b, tolerance, equation) => {
 export {
     calculate
 }
-
-// https://www.youtube.com/watch?v=VN4nUCT4eko

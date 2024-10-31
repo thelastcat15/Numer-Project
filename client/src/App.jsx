@@ -13,6 +13,8 @@ import Test from "./routes/test/main"
 import Graphical from './routes/root/graphical/main'
 import Bisection from './routes/root/bisection/main'
 import FalsePosition from './routes/root/falsePositive/main'
+import OnePointIteration from './routes/root/onePointIteration/main'
+// import NewtonRaphson from './routes/root/newtonRaphson/main'
 
 const Topics = {
   "Root of Equation": {
@@ -30,11 +32,11 @@ const Topics = {
     },
     "One-point Iteration Methods": {
       "path": "root/one-point-iteration",
-      "element": null
+      "element": <OnePointIteration />
     },
     "Newton-Raphson Methods": {
       "path": "root/newton-raphson",
-      "element": null
+      "element": null //<NewtonRaphson />
     },
     "Secant Methods": {
       "path": "root/secant",

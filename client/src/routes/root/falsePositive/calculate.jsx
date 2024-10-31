@@ -1,4 +1,4 @@
-import { evaluate, re } from "mathjs";
+import { evaluate } from "mathjs";
 
 const maxIteration = 200
 
@@ -7,7 +7,6 @@ const calculate = (a, b, tolerance, equation) => {
     b = parseFloat(b);
     tolerance = parseFloat(tolerance);
 
-    const checkError = (xOld, xNew) => Math.abs((xNew - xOld) / xNew);
     const f = (x) => evaluate(equation, { x: x });
 
     if (f(a) * f(b) > 0) {
