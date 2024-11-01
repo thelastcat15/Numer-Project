@@ -1,18 +1,11 @@
-import { evaluate } from "mathjs";
-import { det } from "mathjs";
-
-const maxIteration = 200
-
 const calculate = (n, matA, matB) => {
-  const { n, matA, matB } = formData;
   const matrixA = matA.map((row) => row.map((val) => parseFloat(val, 10)));
   const matrixB = matB.map((val) => parseFloat(val));
-  let ratio;
+  let ratio; // อัตราส่วน
 
-  // Forward Elimination
+  // Forward
   for (let i = 0; i < n; i++) {
     if (matrixA[i][i] === 0) {
-      alert("Error: Divide by zero");
       break;
     }
 
@@ -25,8 +18,8 @@ const calculate = (n, matA, matB) => {
     }
   }
 
-  // Back substitution
-  const xi = new Array(n).fill(0);
+  // หาค่า X
+  const xi = [];
   for (let i = n - 1; i >= 0; i--) {
     xi[i] = matrixB[i];
     for (let j = i + 1; j < n; j++) {
@@ -42,5 +35,5 @@ const calculate = (n, matA, matB) => {
 }
 
 export {
-    calculate
+  calculate
 }

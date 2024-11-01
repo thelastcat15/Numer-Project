@@ -1,7 +1,4 @@
-import { evaluate } from "mathjs";
 import { det } from "mathjs";
-
-const maxIteration = 200
 
 const calculate = (n, matA, matB) => {
     // แปลงค่าเป็นตัวเลขก่อนการคำนวณ

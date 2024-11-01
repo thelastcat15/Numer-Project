@@ -6,14 +6,14 @@ import Solution from './solution'
 
 function ToggleForm({ X, setX }) {
   const [matrixSize, setMatrixSize] = useState(3);
-  const [detMatA, setdetMatA] = useState([])
-  const [detMatAi, setdetMatAi] = useState([])
   const [matrixA, setMatrixA] = useState(
     Array(matrixSize).fill("").map((_, i) => Array(matrixSize).fill(""))
   );
   const [matrixB, setMatrixB] = useState(
     Array(matrixSize).fill("")
   );
+  const [AnsMatrixA, setAnsMatrixA] = useState();
+  const [AnsMatrixB, setAnsMatrixB] = useState();
   
   const random = (...args) => {
     axios.get(
@@ -75,8 +75,8 @@ function ToggleForm({ X, setX }) {
     const result = calculate(matrixSize, matrixA, matrixB);
     if (result) {
       setX(result.X);
-      setdetMatA(result.detA);
-      setdetMatAi(result.detAi);
+      setAnsMatrixA(result.matrixA);
+      setAnsMatrixB(result.matrixB);
     }
   };
 
@@ -246,9 +246,11 @@ function ToggleForm({ X, setX }) {
         </div>
       </div>
 
-      <Solution 
-        detMatA={detMatA}
-        detMatAi={detMatAi}
+      <Solution
+        matrixA={matrixA}
+        matrixB={matrixB}
+        AnsMatrixA={AnsMatrixA}
+        AnsMatrixB={AnsMatrixB}
         X={X}
       />
     </>
