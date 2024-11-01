@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js';
-import KaTeXComponent from "@components/Katex"
-import ToggleForm from './toggleForm';
+import InputForm from './inputForm';
 
 function main() {
   const [dataGraph, setDataGraph] = useState({
@@ -9,43 +8,17 @@ function main() {
     Y: [0,1,2,3],
   });
 
-  // const rowEachPage = 200;
-  // const [page, setPage] = useState(1);
-  // const [startRow, setStartRow] = useState(0);
-  // const [endRow, setEndRow] = useState(rowEachPage);
-
-  // useEffect(() => {
-  //   const tempStartRow = (page - 1) * rowEachPage;
-  //   const tempEndRow = Math.min(page * rowEachPage, dataGraph.X.length);
-  //   setStartRow(tempStartRow);
-  //   setEndRow(tempEndRow);
-  // }, [page, dataGraph]);
-
-  // const handleNextPage = () => {
-  //   if (endRow < dataGraph.X.length) {
-  //     setPage(page + 1);
-  //   }
-  // };
-
-  // const handlePreviousPage = () => {
-  //   if (page > 1) {
-  //     setPage(page - 1);
-  //   }
-  // };
-
-  const [isToggle, setIsToggle] = useState(false);
-  const [openGraph, setOpenGraph] = useState(true)
+  const [openForm, setOpenForm] = useState(true);
+  const [openGraph, setOpenGraph] = useState(false)
   const [openTable, setOpenTable] = useState(false)
-  const [katexText, setKatexText] = useState('...');
 
   return (
     <div className="content">
-      <div className="h-screen w-[90%] max-w-5xl mx-auto pt-[6rem] pb-[3.5rem] flex flex-col space-y-4 text-center gap-5">
+      <div className="w-[90%] max-w-5xl mx-auto pt-[6rem] mb-[3.5rem] flex flex-col space-y-4 text-center gap-5">
         <div className="sans font-bold leading-normal container">
           {/* <p className='text-3xl'>Root of Equation</p> */}
-          <p className='text-3xl'>Graphical Methods</p>
+          <p className='text-3xl'>Bisection Methods</p>
         </div>
-        <KaTeXComponent expression={'f(x) = ' + katexText} />
         <div className="container">
           {
             openGraph && (<Plot
@@ -143,6 +116,10 @@ function main() {
 
             )
           }
+          
+          {
+            openForm && <InputForm />
+          }
         </div>
       </div>
       <div className='fixed bottom-0 right-0'>
@@ -175,13 +152,6 @@ function main() {
           </svg>
         </div>
       </div>
-      
-      <ToggleForm
-        isToggle={isToggle}
-        setIsToggle={setIsToggle}
-        setKatex={setKatexText}
-        setDataGraph={setDataGraph}
-      />
     </div>
   )
 }

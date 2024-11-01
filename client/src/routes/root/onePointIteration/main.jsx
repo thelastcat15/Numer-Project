@@ -48,7 +48,7 @@ function main() {
   }, [katexText]);
 
   return (
-    <>
+    <div className="content">
       <div className="h-screen w-[90%] max-w-5xl mx-auto pt-[6rem] pb-[3.5rem] flex flex-col space-y-4 text-center gap-5">
         <div className="sans font-bold leading-normal container">
           {/* <p className='text-3xl'>Root of Equation</p> */}
@@ -222,7 +222,7 @@ function main() {
         setKatex={setKatexText}
         setDataGraph={setDataGraph}
       />
-    </>
+    </div>
   )
 }
 

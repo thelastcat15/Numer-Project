@@ -7,6 +7,11 @@ const cors = require("cors"); // cross origin resource อนุญาติใ�
 const rateLimit = require("express-rate-limit"); // กันคนยิงเว็บรัวๆ
 const timeout = require("express-timeout-handler").handler;
 
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yaml");
+const file = fs.readFileSync("./swagger.yaml", "utf-8");
+const swaggerDocument = YAML.parse(file);
+
 const app = express();
 const port = process.env.PORT || 3000;
 const { start, disconnect } = require("./mongo");
@@ -60,6 +65,8 @@ app.use((req, res, next) => {
   next();
 }); // middle ware
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
@@ -71,7 +78,7 @@ fs.readdirSync(routesPath).forEach((folder) => {
   fs.readdirSync(routeSubPath).forEach((file) => {
     if (file.endsWith(".js")) {
       const route = require(path.join(routeSubPath, file));
-      app.use(route); // เพิ่ม prefix '/api'
+      app.use("/api", route); // เพิ่ม prefix '/api'
     }
   });
 });

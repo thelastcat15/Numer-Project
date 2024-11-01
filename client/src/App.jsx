@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client'
 
 import './css/index.css'
 
-import Nav from "./components/Nav"
+import Nav from "@components/Nav"
 import Home from "./routes/Home"
 import Test from "./routes/test/main"
 import Graphical from './routes/root/graphical/main'
@@ -16,6 +16,7 @@ import FalsePosition from './routes/root/falsePositive/main'
 import OnePointIteration from './routes/root/onePointIteration/main'
 import NewtonRaphson from './routes/root/newtonRaphson/main'
 import Secant from './routes/root/secant/main'
+import Cramer from './routes/linear/cramersRule/main'
 
 const Topics = {
   "Root of Equation": {
@@ -47,7 +48,7 @@ const Topics = {
   "Linear Algebra Equation": {
     "Cramer's Rule": {
       "path": "linear-algebra/cramers-rule",
-      "element": null
+      "element": <Cramer />
     },
     "Guass Elimination": {
       "path": "linear-algebra/gauss-elimination",
@@ -147,8 +148,10 @@ Object.entries(Topics).forEach(([category, subtopics]) => {
 })
 
 createRoot(document.getElementById("root")).render(
-  <div className='bg'>
+  <>
+    <div className='bg'>
+    </div>
     <Nav topics={Topics} />
     <RouterProvider router={createBrowserRouter(routes)} />
-  </div>
+  </>
 );

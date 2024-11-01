@@ -50,7 +50,7 @@ function Nav({ topics }) {
 
   return (
     <>
-      <div className={`flex sans font-semibold py-4 justify-evenly fixed top-0 w-full backdrop-blur-md z-[99]`}>
+      <div className={`flex sans font-semibold py-4 justify-evenly fixed top-0 w-full backdrop-blur-md z-[99] text-white`}>
         {Object.entries(topics).map(([category, subtopics]) => (
           <Dropdown
             key={category}
