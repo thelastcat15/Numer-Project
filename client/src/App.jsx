@@ -17,6 +17,7 @@ import OnePointIteration from './routes/root/onePointIteration/main'
 import NewtonRaphson from './routes/root/newtonRaphson/main'
 import Secant from './routes/root/secant/main'
 import Cramer from './routes/linear/cramersRule/main'
+import GaussElimination from './routes/linear/gaussElimination/main'
 
 const Topics = {
   "Root of Equation": {
@@ -52,7 +53,7 @@ const Topics = {
     },
     "Guass Elimination": {
       "path": "linear-algebra/gauss-elimination",
-      "element": null
+      "element": <GaussElimination />
     },
     "Guass Jordan Elimination": {
       "path": "linear-algebra/gauss-jordan",

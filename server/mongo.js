@@ -42,9 +42,12 @@ async function addDataToDatabase(topic, subTopic, data) {
     }
 
     const collection = database.collection(subTopic);
-    const dataLoad = collection.findOne(data);
-    if (dataLoad !== null) {
+    const dataLoad = await collection.findOne(data);
+    if (dataLoad === null) {
+      console.log(`Add ${topic} ${subTopic}`, data)
       await collection.insertOne(data);
+    } else {
+      console.log(`Data already exists in ${topic} ${subTopic}`)
     }
   } catch (error) {
     console.error(error);
