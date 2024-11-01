@@ -18,6 +18,7 @@ import NewtonRaphson from './routes/root/newtonRaphson/main'
 import Secant from './routes/root/secant/main'
 import Cramer from './routes/linear/cramersRule/main'
 import GaussElimination from './routes/linear/gaussElimination/main'
+import GaussJordan from './routes/linear/gaussJodan/main'
 
 const Topics = {
   "Root of Equation": {
@@ -57,7 +58,7 @@ const Topics = {
     },
     "Guass Jordan Elimination": {
       "path": "linear-algebra/gauss-jordan",
-      "element": null
+      "element": <GaussJordan />
     },
     "Matrix Inversion": {
       "path": "linear-algebra/matrix-inversion",

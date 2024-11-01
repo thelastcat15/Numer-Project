@@ -1,7 +1,7 @@
 const calculate = (n, matA, matB) => {
   const matrixA = matA.map((row) => row.map((val) => parseFloat(val, 10)));
-  const matrixB = matB.map((val) => parseFloat(val));
-  let ratio; // อัตราส่วน
+  const matrixB = matB.map((val) => parseFloat(val, 10));
+  let ratio;
 
   // โดดหน้า
   for (let i = 0; i < n; i++) {
@@ -18,15 +18,30 @@ const calculate = (n, matA, matB) => {
     }
   }
 
-  // หาค่า X reverse
-  const xi = [];
+  // โดดหลัง
   for (let i = n - 1; i >= 0; i--) {
-    xi[i] = matrixB[i];
-    for (let j = i + 1; j < n; j++) {
-      xi[i] -= matrixA[i][j] * xi[j];
+    for (let j = i - 1; j >= 0; j--) {
+      ratio = matrixA[j][i] / matrixA[i][i];
+      for (let k = i; k < n; k++) {
+        matrixA[j][k] -= ratio * matrixA[i][k];
+      }
+      matrixB[j] -= ratio * matrixB[i];
     }
-    xi[i] /= matrixA[i][i];
   }
+
+  // หาค่า X
+  for (let i = 0; i < n; i++) {
+    const diagVal = matrixA[i][i];
+    if (diagVal !== 0) {
+      matrixB[i] /= diagVal;
+      matrixA[i][i] /= diagVal;
+    } else {
+      return;
+    }
+  }
+
+  const xi = [...matrixB];
+
   return {
     matrixA: matrixA,
     matrixB: matrixB,
