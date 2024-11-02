@@ -19,7 +19,6 @@ function Solution({ matrixA, matrixB, AnsMatrix, matrixY ,matrixL, matrixU}) {
   const xVector = matrixA.map((_, i) => `x_{${i + 1}}`).join(" \\\\ ");
 
   const matBLatex = matrixB.map((val) => val).join("\\\\");
-  const matXLatex = AnsMatrix.map((val) => val.toFixed(4)).join("\\\\");
 
   // สร้างสมการผลลัพธ์แต่ละตัว
   const ySolutions = matrixY
