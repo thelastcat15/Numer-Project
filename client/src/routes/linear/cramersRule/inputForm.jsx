@@ -102,13 +102,14 @@ function ToggleForm({ X, setX }) {
         temp.pop();
       }
     }
-    setMatrixA(temp);
-    if (differ == 1) {
-      setMatrixB([...matrixB].concat([""]));
+    let temp3 = [...matrixB]
+    if (newSize-matrixSize == 1) {
+      temp3 = temp3.concat([""])
     } else {
-      setMatrixB([...matrixB].pop());
+      temp3.pop()
     }
-    setMatrixB(temp);
+    setMatrixA(temp);
+    setMatrixB(temp3);
     setMatrixSize(newSize);
   };
 
