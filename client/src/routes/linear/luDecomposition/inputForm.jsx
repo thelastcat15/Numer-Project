@@ -98,12 +98,12 @@ function ToggleForm({ X, setX }) {
           temp2.pop()
         }
       }else{
-        temp2 = temp2.concat(Array(differ).fill(''));
+        temp2 = temp2.concat(Array(differ).fill(""));
       }
       temp.push(temp2)
     })
     if(newSize > matrixSize){
-      temp = temp.concat(Array(differ).fill(Array(newSize).fill('')))
+      temp = temp.concat(Array(differ).fill(Array(newSize).fill("")))
     }else{
       for(let i=0;i<differ;i++){
         temp.pop();
@@ -111,7 +111,7 @@ function ToggleForm({ X, setX }) {
     }
     setMatrixA(temp);
     if (differ == 1) {
-      setMatrixB([...matrixB].concat(['']));
+      setMatrixB([...matrixB].concat([""]));
     } else {
       setMatrixB([...matrixB].pop());
     }
