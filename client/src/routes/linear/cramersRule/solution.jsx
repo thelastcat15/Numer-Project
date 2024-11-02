@@ -24,7 +24,7 @@ function Solution({ detMatA, detMatAi, X }) {
     X.map((x, i) => `x_{${i + 1}} = ${x.toFixed(4)}`).join(", \\ ");
 
   return (
-    <div className='mt-[3rem] mx-auto shadow-2xl min-h-96 backdrop-blur-md'>
+    <div className='mt-[3rem] mx-auto shadow-2xl min-h-96 backdrop-blur-md mt-10'>
       <div className="flex flex-col items-center space-y-6 p-4">
         <BlockMath math={detALatex} />
         <BlockMath math={detAiLatex} />

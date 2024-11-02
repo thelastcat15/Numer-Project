@@ -18,7 +18,7 @@ function Solution({ AnsMatrixA, AnsMatrixB, X }) {
     \\end{bmatrix}`;
 
   return (
-    <div className="flex flex-col items-center space-y-6 p-4">
+    <div className="flex flex-col items-center space-y-6 p-4 mt-10">
       <BlockMath math={latex} />
       <BlockMath math={solutions} />
     </div>

@@ -19,6 +19,7 @@ import Secant from './routes/root/secant/main'
 import Cramer from './routes/linear/cramersRule/main'
 import GaussElimination from './routes/linear/gaussElimination/main'
 import GaussJordan from './routes/linear/gaussJodan/main'
+import LUDecomposition from './routes/linear/luDecomposition/main'
 
 const Topics = {
   "Root of Equation": {
@@ -66,65 +67,65 @@ const Topics = {
     },
     "LU Decomposition Methods": {
       "path": "linear-algebra/lu-decomposition",
-      "element": null
+      "element": <LUDecomposition />
     },
     "Jacobi Iteration Methods": {
       "path": "linear-algebra/jacobi-iteration",
       "element": null
     },
-    "Conjugate Gradient Methods": {
-      "path": "linear-algebra/conjugate-gradient",
-      "element": null
-    }
+    // "Conjugate Gradient Methods": {
+    //   "path": "linear-algebra/conjugate-gradient",
+    //   "element": null
+    // }
   },
-  "Interpolation": {
-    "Newton Divided-differences": {
-      "path": "interpolation/newton-divided-differences",
-      "element": null
-    },
-    "Lagrange Interpolation": {
-      "path": "interpolation/lagrange",
-      "element": null
-    },
-    "Spline Interpolation": {
-      "path": "interpolation/spline",
-      "element": null
-    }
-  },
-  "Extrapolation": {
-    "Simple Regression": {
-      "path": "extrapolation/simple-regression",
-      "element": null
-    },
-    "Multiple Regression": {
-      "path": "extrapolation/multiple-regression",
-      "element": null
-    }
-  },
-  "Integration": {
-    "Trapezoidal Rule": {
-      "path": "integration/trapezoidal",
-      "element": null
-    },
-    "Composite Trapezoidal Rule": {
-      "path": "integration/composite-trapezoidal",
-      "element": null
-    },
-    "Simpson Rule": {
-      "path": "integration/simpson",
-      "element": null
-    },
-    "Composite Simpson Rule": {
-      "path": "integration/composite-simpson",
-      "element": null
-    }
-  },
-  "Differentiation": {
-    "Numerical Differentiation": {
-      "path": "differentiation/numerical",
-      "element": null
-    }
-  }
+  // "Interpolation": {
+  //   "Newton Divided-differences": {
+  //     "path": "interpolation/newton-divided-differences",
+  //     "element": null
+  //   },
+  //   "Lagrange Interpolation": {
+  //     "path": "interpolation/lagrange",
+  //     "element": null
+  //   },
+  //   "Spline Interpolation": {
+  //     "path": "interpolation/spline",
+  //     "element": null
+  //   }
+  // },
+  // "Extrapolation": {
+  //   "Simple Regression": {
+  //     "path": "extrapolation/simple-regression",
+  //     "element": null
+  //   },
+  //   "Multiple Regression": {
+  //     "path": "extrapolation/multiple-regression",
+  //     "element": null
+  //   }
+  // },
+  // "Integration": {
+  //   "Trapezoidal Rule": {
+  //     "path": "integration/trapezoidal",
+  //     "element": null
+  //   },
+  //   "Composite Trapezoidal Rule": {
+  //     "path": "integration/composite-trapezoidal",
+  //     "element": null
+  //   },
+  //   "Simpson Rule": {
+  //     "path": "integration/simpson",
+  //     "element": null
+  //   },
+  //   "Composite Simpson Rule": {
+  //     "path": "integration/composite-simpson",
+  //     "element": null
+  //   }
+  // },
+  // "Differentiation": {
+  //   "Numerical Differentiation": {
+  //     "path": "differentiation/numerical",
+  //     "element": null
+  //   }
+  // }
 }
 
 const routes = [
