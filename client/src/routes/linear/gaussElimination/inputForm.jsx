@@ -104,7 +104,7 @@ function ToggleForm({ X, setX }) {
     }
     setMatrixA(temp);
     if (differ == 1) {
-      setMatrixB([...matrixB].concat(['']));
+      setMatrixB([...matrixB].concat([""]));
     } else {
       setMatrixB([...matrixB].pop());
     }
