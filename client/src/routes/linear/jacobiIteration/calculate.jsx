@@ -32,10 +32,6 @@ const calculate = (n, matA, matB, tolerance) => {
     tempData.push(xi);
   } while (iterInLoop < MAX_ITER && maxError >= toleranceNum);
 
-  if (iterInLoop >= MAX_ITER) {
-    console.log("Jacobi did not converge within number of iterations.");
-  }
-
   return tempData;
 }
 
