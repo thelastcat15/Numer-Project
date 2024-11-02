@@ -7,13 +7,19 @@ import Solution from './solution'
 function ToggleForm({ X, setX }) {
   const [matrixSize, setMatrixSize] = useState(3);
   const [matrixA, setMatrixA] = useState(
-    Array(matrixSize).fill("").map((_, i) => Array(matrixSize).fill(""))
+    Array(matrixSize).fill("").map(() => Array(matrixSize).fill(""))
   );
   const [matrixB, setMatrixB] = useState(
     Array(matrixSize).fill("")
   );
-  const [AnsMatrixA, setAnsMatrixA] = useState();
-  const [AnsMatrixB, setAnsMatrixB] = useState();
+  const [AnsMatrix, setAnsMatrix] = useState([]);
+  const [matrixY, setMatrixY] = useState(Array(matrixSize).fill(0));
+  const [matrixL, setMatrixL] = useState(
+    Array(matrixSize).fill(0).map(() => Array(matrixSize).fill(0))
+  );
+  const [matrixU, setMatrixU] = useState(
+    Array(matrixSize).fill(0).map(() => Array(matrixSize).fill(0))
+  );
   
   const random = (...args) => {
     axios.get(
@@ -74,9 +80,10 @@ function ToggleForm({ X, setX }) {
   const onClickCalculate = () => {
     const result = calculate(matrixSize, matrixA, matrixB);
     if (result) {
-      setX(result.X);
-      setAnsMatrixA(result.matrixA);
-      setAnsMatrixB(result.matrixB);
+      setAnsMatrix(result.X);
+      setMatrixL(result.matrixL);
+      setMatrixU(result.matrixU);
+      setMatrixY(result.matrixY);
     }
   };
 
@@ -249,9 +256,10 @@ function ToggleForm({ X, setX }) {
       <Solution
         matrixA={matrixA}
         matrixB={matrixB}
-        AnsMatrixA={AnsMatrixA}
-        AnsMatrixB={AnsMatrixB}
-        X={X}
+        AnsMatrix={AnsMatrix}
+        matrixY={matrixY}
+        matrixL={matrixL}
+        matrixU={matrixU}
       />
     </>
   );

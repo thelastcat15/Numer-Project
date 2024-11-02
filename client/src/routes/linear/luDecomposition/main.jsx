@@ -11,7 +11,7 @@ function main() {
       <div className="w-[90%] max-w-5xl mx-auto pt-[6rem] mb-[3.5rem] flex flex-col space-y-4 text-center gap-5">
         <div className="sans font-bold leading-normal container">
           {/* <p className='text-3xl'>Root of Equation</p> */}
-          <p className='text-3xl'>Guass Elimination</p>
+          <p className='text-3xl'>LU Decomposition Methods</p>
         </div>
         <div className="container">
           {

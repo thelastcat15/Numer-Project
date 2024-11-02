@@ -52,8 +52,6 @@ const calculate = (n, matA, matB) => {
   }
 
   return {
-    matrixA: matA,
-    matrixB: matB,
     matrixL: L,
     matrixU: U,
     matrixY: y,

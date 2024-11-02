@@ -73,6 +73,10 @@ const Topics = {
       "path": "linear-algebra/jacobi-iteration",
       "element": null
     },
+    "Gauss Seidel Methods": {
+      "path": "linear-algebra/gauss-seidel",
+      "element": null
+    },
     // "Conjugate Gradient Methods": {
     //   "path": "linear-algebra/conjugate-gradient",
     //   "element": null
