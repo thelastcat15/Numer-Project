@@ -13,14 +13,11 @@ function Solution({ matrixA, matrixB, AnsMatrix, matrixY ,matrixL, matrixU}) {
     .join("\\\\");
   const matYLatex = matrixY.map((val) => val.toFixed(4)).join("\\\\");
 
-  // สร้าง vector y แนวตั้ง
   const yVector = matrixY.map((_, i) => `y_{${i + 1}}`).join(" \\\\ ");
-  // สร้าง vector x แนวตั้ง
   const xVector = matrixA.map((_, i) => `x_{${i + 1}}`).join(" \\\\ ");
 
   const matBLatex = matrixB.map((val) => val).join("\\\\");
 
-  // สร้างสมการผลลัพธ์แต่ละตัว
   const ySolutions = matrixY
     .map((y, i) => `y_{${i + 1}} = ${y.toFixed(4)}`)
     .join(", \\ ");

@@ -20,6 +20,8 @@ import Cramer from './routes/linear/cramersRule/main'
 import GaussElimination from './routes/linear/gaussElimination/main'
 import GaussJordan from './routes/linear/gaussJodan/main'
 import LUDecomposition from './routes/linear/luDecomposition/main'
+import JacobiIteration from './routes/linear/jacobiIteration/main'
+import GaussSeidel from './routes/linear/gaussSeidel/main'
 
 const Topics = {
   "Root of Equation": {
@@ -61,21 +63,21 @@ const Topics = {
       "path": "linear-algebra/gauss-jordan",
       "element": <GaussJordan />
     },
-    "Matrix Inversion": {
-      "path": "linear-algebra/matrix-inversion",
-      "element": null
-    },
+    // "Matrix Inversion": {
+    //   "path": "linear-algebra/matrix-inversion",
+    //   "element": null
+    // },
     "LU Decomposition Methods": {
       "path": "linear-algebra/lu-decomposition",
       "element": <LUDecomposition />
     },
     "Jacobi Iteration Methods": {
       "path": "linear-algebra/jacobi-iteration",
-      "element": null
+      "element": <JacobiIteration />
     },
     "Gauss Seidel Methods": {
       "path": "linear-algebra/gauss-seidel",
-      "element": null
+      "element": <GaussSeidel />
     },
     // "Conjugate Gradient Methods": {
     //   "path": "linear-algebra/conjugate-gradient",
